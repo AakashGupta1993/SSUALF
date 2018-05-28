@@ -1,7 +1,7 @@
 ## Extra
 conda install -c menpo opencv
 
-conda install moviepy
+pip install moviepy
 
 # Semantic Segmentation
 ### Introduction
