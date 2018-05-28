@@ -748,17 +748,22 @@ def unwarp_and_fillPoly(image, combined_binary, left_fitx, right_fitx, ploty, Mi
     newwarp = cv2.warpPerspective(color_warp, Minv, (image.shape[1], image.shape[0])) 
     #print(newwarp.shape)
     # Combine the result with the original image
+    # BGR image
     red = cv2.imread('red.jpg')
+    indices = (newwarp[:,:,0] == 255) & (newwarp[:,:,2] == 255)
+    red[indices] = [255, 0, 255]
+    
+    return red
     #black = cv2.cvtColor(black,cv2.COLOR_RGB2BGR)
     #print(black.shape)
-    result = cv2.addWeighted(red, 1, newwarp, 0.3, 0)
+#     result = cv2.addWeighted(red, 1, newwarp, 0.3, 0)
     
-    if print_image_statments == True :
-        plt.figure()
-        plt.imshow(result)
+#     if print_image_statments == True :
+#         plt.figure()
+#         plt.imshow(result)
  
     
-    return result    
+#     return result    
 
 
 # ## Radius of curvature and center offset
@@ -967,7 +972,7 @@ right_fitx = 0
 left_fit = 0
 right_fit = 0
 ploty = 0
-clip1 = VideoFileClip("project_video.mp4").subclip(0,15)
+clip1 = VideoFileClip("project_video.mp4").subclip(0,1)
 white_clip = clip1.fl_image(process_image_for_video) #NOTE: this function expects color images!!
 white_clip.write_videofile(white_output, audio=False)
 #get_ipython().run_line_magic('time', 'white_clip.write_videofile(white_output, audio=False)')
